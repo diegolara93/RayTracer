@@ -26,4 +26,27 @@ public class Matrix4f {
 
         return mat;
     }
+    public static Matrix4f rotationY(float angle) {
+        Matrix4f matrix = Matrix4f.identity();
+        float rad = (float) Math.toRadians(angle);
+        matrix.m[0][0] = (float) Math.cos(rad);
+        matrix.m[0][2] = (float) Math.sin(rad);
+        matrix.m[2][0] = (float) -Math.sin(rad);
+        matrix.m[2][2] = (float) Math.cos(rad);
+        return matrix;
+    }
+
+    public Matrix4f multiply(Matrix4f other) {
+        Matrix4f mat = new Matrix4f();
+        float sum = 0;
+        for (int row = 0; row < 4; row++) {
+            for (int col = 0; col < 4; col++) {
+                sum += this.m[row][col] * other.m[row][col];
+                if (col == 3) {
+                    mat.m[row][col] = sum;
+                }
+            }
+        }
+        return mat;
+    }
 }
